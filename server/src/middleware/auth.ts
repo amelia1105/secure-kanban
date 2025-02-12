@@ -6,5 +6,29 @@ interface JwtPayload {
 }
 
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
-  // TODO: verify the token exists and add the user data to the request object
+  // get authorization header from request
+  const authHeader = req.headers.authorization;
+
+  // if authorization header is present, extract token from it
+  if (authHeader) {
+    const token = authHeader.split(' ')[1];
+
+    // get secret key from env variables
+    const secretKey = process.env.JWT_SECRET_KEY || '';
+
+    // verify the JWT token
+    jwt.verify(token, secretKey, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+
+      // attach user info to request object
+      req.user = user as JwtPayload;
+      return next();
+    });
+    
+    // if no authorization header is present, send unauthorized status
+  } else {
+    res.sendStatus(401);
+  }
 };
