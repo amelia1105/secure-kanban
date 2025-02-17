@@ -4,32 +4,28 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 export const login = async (req: Request, res: Response) => {
-  // extract username and password
+  console.log("Login request received:", req.body); // Debugging line
+
   const { username, password } = req.body;
 
-  // find user by username
-  const user = await User.findOne({
-    where: { username },
-  });
+  const user = await User.findOne({ where: { username } });
 
-  // if user not found, send authentication failed response
   if (!user) {
+    console.log("User not found for username:", username); // Debugging line
     return res.status(401).json({ message: 'Authentication failed' });
   }
 
-  // compare provided password with hashed password
   const passwordIsValid = await bcrypt.compare(password, user.password);
 
-  // if password is invalid, send authentication failed response
   if (!passwordIsValid) {
+    console.log("Invalid password for user:", username); // Debugging line
     return res.status(401).json({ message: 'Authentication failed' });
   }
 
-  // get secret key from environment variables
   const secretKey = process.env.JWT_SECRET_KEY || '';
-
-  // generate JWT token for authenticated user
   const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+
+  console.log("User authenticated successfully:", username); // Debugging line
   return res.json({ token });
 };
 
