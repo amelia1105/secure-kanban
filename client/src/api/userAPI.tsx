@@ -2,30 +2,23 @@ import Auth from '../utils/auth';
 
 const retrieveUsers = async () => {
   try {
-    const token = Auth.getToken();  // Get token from AuthService
-    if (!token) {
-      throw new Error('No token available');
-    }
-
-    const response = await fetch('/api/users', {
-      method: 'GET',
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${Auth.getToken()}`
       }
-    });    
+    });
+    const data = await response.json();
 
     if (!response.ok) {
-      throw new Error('Failed to retrieve users');
+      throw new Error('invalid user API response, check network tab!');
     }
 
-    const data = await response.json();
     return data;
-
   } catch (err) {
-    console.error('Error from data retrieval:', err);
+    console.log('Error from data retrieval:', err);
     return [];
   }
-}
+};
 
 export { retrieveUsers };
