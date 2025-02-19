@@ -78,7 +78,7 @@ const CreateTicket = () => {
             value={newTicket?.status || ''}
             onChange={handleTextChange}
           >
-            <option value='Todo'>Todo</option>
+            <option value='Todo'>To Do</option>
             <option value='In Progress'>In Progress</option>
             <option value='Done'>Done</option>
           </select>
