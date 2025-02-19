@@ -19,7 +19,7 @@ const CreateTicket = () => {
 
   const navigate = useNavigate();
 
-  const [users, setUsers] = useState<UserData[] | undefined>([]);
+  const [users, setUsers] = useState<UserData[]>([]);
 
   const getAllUsers = async () => {
     try {
@@ -90,27 +90,18 @@ const CreateTicket = () => {
             onChange={handleTextAreaChange}
           />
           <label htmlFor='tUserId'>User's ID</label>
-          <select
+            <select
             name='assignedUserId'
             value={newTicket?.assignedUserId || ''}
             onChange={handleUserChange}
-          >
-            {users ? users.map((user) => {
-              return (
-                <option key={user.id} value={String(user.id)}>
-                  {user.username}
-                </option>
-              )
-            }) : (
-            <textarea 
-              id='tUserId'
-              name='assignedUserId'
-              value={newTicket?.assignedUserId || 0}
-              onChange={handleTextAreaChange}
-            />
-            )
-          }
-          </select>
+            >
+            <option value='' disabled>Select a user</option>
+            {users && users.map((user) => (
+              <option key={user.id} value={String(user.id)}>
+              {user.username}
+              </option>
+            ))}
+            </select>
           <button type='submit' onSubmit={handleSubmit}>Submit Form</button>
         </form>
       </div>
