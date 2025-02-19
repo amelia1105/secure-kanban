@@ -10,6 +10,7 @@ const sequelize = process.env.DB_URL
       dialect: 'postgres',
       dialectOptions: {
         decimalNumbers: true,
+        ssl: true,
       },
       pool: {
         max: 10,          // Max number of connections in the pool
