@@ -13,7 +13,9 @@ This simple Kanban board was built to demonstrate authentication using JSON Web 
 - [License](#license)
 - [Questions](#questions)
 
-## Link
+## Link to Application
+
+**NOTE:** The Render database for this application is no longer active. This website will NOT function as expected.
 
 https://secure-kanban.onrender.com/
 
@@ -128,4 +130,4 @@ SOFTWARE.
 
 ## Questions
 
-For any questions about this project, please contact me by email: aebellanger@yahoo.com
+For any questions about this project, please contact me by email: ameliabalvarado@gmail.com
